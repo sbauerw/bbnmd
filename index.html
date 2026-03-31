@@ -290,11 +290,26 @@
     }
     .what-intro {
       max-width: var(--narrow-max);
-      margin-bottom: clamp(56px, 8vw, 88px);
+      margin-bottom: clamp(48px, 7vw, 72px);
     }
     .what-intro .label { margin-bottom: 1.5rem; }
     .what-intro .divider { margin: 0 0 2.75rem; }
     .what-intro .body-text p + p { margin-top: 1.4em; }
+
+    /* Work section editorial image — full-width, structured */
+    .work-image-block {
+      width: 100%;
+      margin-bottom: clamp(56px, 8vw, 96px);
+      overflow: hidden;
+    }
+    .work-image-block img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 680px;
+      object-fit: cover;
+      object-position: center center;
+    }
 
     .pillars-grid {
       display: grid;
@@ -387,16 +402,18 @@
       letter-spacing: 0.08em;
     }
 
-    /* Image column */
+    /* Image column — sticky portrait with portrait crop */
     .about-image {
       position: sticky;
       top: calc(22px + 60px); /* nav height offset */
+      overflow: hidden;
     }
     .about-image img {
       display: block;
       width: 100%;
-      height: auto;
+      aspect-ratio: 4 / 5;
       object-fit: cover;
+      object-position: center top;
     }
 
     /* About grid 768px breakpoint handled in consolidated block below */
@@ -710,7 +727,8 @@
       .hero-pillars { letter-spacing: 0.12em; }
       .hero-support { max-width: 100%; }
       .pillar-body { font-size: 0.938rem; }
-      .about-image img { max-height: 75vw; object-fit: cover; }
+      .about-image img { aspect-ratio: 3 / 4; }
+      .work-image-block img { max-height: 72vw; }
     }
 
     /* 480px: small phones */
@@ -796,6 +814,16 @@
           <p>My work focuses on the design, curation, and development of wellness and longevity ecosystems, integrating science, aesthetics, and environment into applied, real-world frameworks.</p>
           <p>This includes advisory, concept development, research exploration, and the translation of emerging fields such as biotechnology, epigenetics, and sensorial design into tangible strategies, programs, and environments.</p>
         </div>
+      </div>
+
+      <!-- Work section editorial image — visible, prominent, intentional -->
+      <div class="work-image-block fade-in">
+        <img
+          src="assets/images/Work_section.jpg"
+          alt="The foundations of Birgit Bauer Wöhlers' work — Holistic Health, Cellular Optimization, Advanced Aesthetics"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <div class="pillars-grid">
