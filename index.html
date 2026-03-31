@@ -70,7 +70,7 @@
     .hero-name {
       font-family: var(--font-serif);
       font-weight: 300;
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(2.6rem, 8vw, 7rem);
       line-height: 1.01;
       letter-spacing: -0.01em;
       color: var(--text-primary);
@@ -191,23 +191,46 @@
 
     /* ─── HERO ───────────────────────────────────────────────── */
     #hero {
-      min-height: 90vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: clamp(128px, 16vw, 192px) var(--side-pad) clamp(80px, 10vw, 120px);
+      padding: 0 var(--side-pad);
       background: var(--bg-primary);
-      background-image: radial-gradient(ellipse at 50% 0%, rgba(26,25,22,0.032) 0%, transparent 68%);
+      overflow: hidden;
     }
     .hero-inner {
       max-width: var(--container-max);
       margin: 0 auto;
       width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 6vw, 80px);
+      align-items: center;
+      padding: clamp(120px, 14vw, 180px) 0 clamp(80px, 10vw, 120px);
     }
     .hero-label { margin-bottom: 2.5rem; }
     .hero-name  { margin-bottom: 2rem; }
     .hero-pillars { margin-bottom: 2.25rem; }
     .hero-support { margin-bottom: 3.25rem; }
+
+    /* Hero portrait — right column */
+    .hero-portrait {
+      position: relative;
+      align-self: stretch;
+      min-height: clamp(480px, 70vh, 800px);
+    }
+    .hero-portrait img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Hero 900px breakpoint is handled in the consolidated @media block below */
 
     /* ─── SECTION RHYTHM ─────────────────────────────────────── */
     #positioning,
@@ -235,8 +258,36 @@
       line-height: 1.78;
     }
 
-    /* ─── WHAT I DO ──────────────────────────────────────────── */
-    .what-inner { max-width: var(--container-max); margin: 0 auto; }
+    /* ─── WHAT I DO ──────────────────────────────────────── */
+    #what-i-do { position: relative; overflow: hidden; }
+    /* Work_section.jpg — atmospheric layer, very low opacity so text reads clearly */
+    #what-i-do::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/images/Work_section.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Gradient fade toward bottom so pillar borders stay crisp */
+    #what-i-do::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: linear-gradient(to bottom, transparent, var(--bg-primary));
+      pointer-events: none;
+      z-index: 1;
+    }
+    .what-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
     .what-intro {
       max-width: var(--narrow-max);
       margin-bottom: clamp(56px, 8vw, 88px);
@@ -311,17 +362,19 @@
       align-items: baseline;
     }
     .diff-list li:first-child { border-top: 1px solid var(--border-subtle); }
-    .diff-list li::before {
-      content: '—';
-      color: var(--text-secondary);
-      flex-shrink: 0;
-      font-weight: 300;
-    }
     .diff-right .body-text { font-size: clamp(0.938rem, 1.4vw, 1.063rem); }
 
     /* ─── ABOUT ──────────────────────────────────────────────── */
     .about-inner { max-width: var(--container-max); margin: 0 auto; }
-    .about-text { max-width: 700px; }
+
+    /* Two-column grid: text left, image right */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 7vw, 100px);
+      align-items: start;
+    }
+
     .about-text .label { margin-bottom: 1.5rem; }
     .about-text .divider { margin: 0 0 2.75rem; }
     .about-text .body-text {
@@ -333,6 +386,20 @@
       font-variant: small-caps;
       letter-spacing: 0.08em;
     }
+
+    /* Image column */
+    .about-image {
+      position: sticky;
+      top: calc(22px + 60px); /* nav height offset */
+    }
+    .about-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* About grid 768px breakpoint handled in consolidated block below */
 
     /* ─── ACCESS ─────────────────────────────────────────────── */
     .access-inner { max-width: var(--container-max); margin: 0 auto; }
@@ -576,7 +643,34 @@
     .fade-in.delay-4 { transition-delay: 0.44s; }
     .fade-in.delay-5 { transition-delay: 0.56s; }
 
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+       900px  — hero collapses to single column
+       768px  — grids, pillars, diff-cols, about-grid stack
+       600px  — mid-range tablets / large phones
+       480px  — small phones
+    ═══════════════════════════════════════════════════════════ */
+
+    /* 900px: hero portrait moves above text */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding-top: clamp(96px, 18vw, 140px);
+        padding-bottom: clamp(60px, 10vw, 100px);
+      }
+      .hero-portrait {
+        min-height: 72vw;
+        order: -1;
+      }
+      .hero-portrait img {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 72vw;
+      }
+    }
+
+    /* 768px: grids collapse */
     @media (max-width: 768px) {
       .pillars-grid {
         grid-template-columns: 1fr;
@@ -585,15 +679,24 @@
       .pillar {
         padding-top: 1.75rem;
         padding-bottom: 2rem;
-        border-top: 1px solid var(--border-subtle);
         border-bottom: none;
       }
       .pillar:last-child { border-bottom: 1px solid var(--border-subtle); }
 
       .diff-cols {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
       }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(32px, 8vw, 52px);
+      }
+      .about-image {
+        position: static;
+        order: -1;
+      }
+
       .footer-inner {
         flex-direction: column;
         align-items: flex-start;
@@ -601,11 +704,36 @@
       }
     }
 
-    @media (max-width: 480px) {
+    /* 600px: mid tablets and large phones */
+    @media (max-width: 600px) {
+      .positioning-text { max-width: 100%; }
+      .hero-pillars { letter-spacing: 0.12em; }
       .hero-support { max-width: 100%; }
-      .nav-brand { font-size: 0.875rem; }
-      .modal { padding: 40px 24px; }
-      .form-footer { flex-direction: column; align-items: flex-start; }
+      .pillar-body { font-size: 0.938rem; }
+      .about-image img { max-height: 75vw; object-fit: cover; }
+    }
+
+    /* 480px: small phones */
+    @media (max-width: 480px) {
+      .nav { padding: 18px var(--side-pad); }
+      .nav-brand { font-size: 0.813rem; }
+      .nav-cta { font-size: 0.625rem; letter-spacing: 0.15em; }
+
+      .hero-name { font-size: clamp(2.25rem, 9vw, 3.5rem); }
+      .hero-label { margin-bottom: 1.75rem; }
+      .hero-portrait { min-height: 85vw; }
+      .hero-portrait img { height: 85vw; }
+
+      .btn { display: block; text-align: center; }
+
+      .diff-list li { padding: 0.75rem 0; }
+
+      .access-content { max-width: 100%; }
+
+      .modal { padding: 36px 20px; }
+      .modal-close { top: 18px; right: 18px; }
+      .form-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .form-submit { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -621,11 +749,26 @@
   <!-- ─── HERO ────────────────────────────────────────────── -->
   <section id="hero" aria-label="Introduction">
     <div class="hero-inner">
-      <p class="label hero-label fade-in">Private Advisory</p>
-      <h1 class="hero-name fade-in delay-1">Birgit Bauer Wöhlers</h1>
-      <p class="hero-pillars fade-in delay-2">Cellular Optimization &nbsp;·&nbsp; Advanced Aesthetics &nbsp;·&nbsp; Longevity Design</p>
-      <p class="hero-support fade-in delay-3">A private advisory for those shaping the future of how we live, perform, and age.</p>
-      <button class="btn open-modal fade-in delay-4" id="hero-request-btn" aria-label="Open private access request">Request Access</button>
+
+      <!-- Left: text -->
+      <div class="hero-text">
+        <p class="label hero-label fade-in">Private Advisory</p>
+        <h1 class="hero-name fade-in delay-1">Birgit Bauer Wöhlers</h1>
+        <p class="hero-pillars fade-in delay-2">Cellular Optimization &nbsp;·&nbsp; Advanced Aesthetics &nbsp;·&nbsp; Longevity Design</p>
+        <p class="hero-support fade-in delay-3">A private advisory for those shaping the future of how we live, perform, and age.</p>
+        <button class="btn open-modal fade-in delay-4" id="hero-request-btn" aria-label="Open private access request">Request Access</button>
+      </div>
+
+      <!-- Right: editorial portrait -->
+      <div class="hero-portrait fade-in delay-2">
+        <img
+          src="assets/images/private_advisory_section.png"
+          alt="Birgit Bauer Wöhlers, Private Advisory"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
     </div>
   </section>
 
@@ -636,8 +779,8 @@
         <p class="label fade-in">Practice</p>
         <div class="divider fade-in" style="margin-top: 1.5rem;"></div>
         <div class="body-text fade-in" style="margin-top: 2.75rem;">
-          <p>I work across health, aesthetics, and environment—designing wellness and longevity ecosystems that elevate human performance, balance, and long-term vitality.</p>
-          <p>My work extends from private clients to corporate, government, and future-focused initiatives—where wellbeing becomes part of how we live, build, and evolve.</p>
+          <p>I work across health, aesthetics, and environment, designing wellness and longevity ecosystems that elevate human performance, balance, and long-term vitality.</p>
+          <p>My work extends from private clients to corporate, government, and future-focused initiatives, where wellbeing becomes part of how we live, build, and evolve.</p>
         </div>
       </div>
     </div>
@@ -650,7 +793,7 @@
         <p class="label">Work</p>
         <div class="divider" style="margin-top: 1.5rem;"></div>
         <div class="body-text" style="margin-top: 2.75rem;">
-          <p>My work focuses on the design, curation, and development of wellness and longevity ecosystems—integrating science, aesthetics, and environment into applied, real-world frameworks.</p>
+          <p>My work focuses on the design, curation, and development of wellness and longevity ecosystems, integrating science, aesthetics, and environment into applied, real-world frameworks.</p>
           <p>This includes advisory, concept development, research exploration, and the translation of emerging fields such as biotechnology, epigenetics, and sensorial design into tangible strategies, programs, and environments.</p>
         </div>
       </div>
@@ -693,7 +836,7 @@
         <div class="diff-right fade-in delay-1">
           <div class="body-text">
             <p>With a growing exploration into fields such as neuroaesthetics, biogeometry, and the relationship between space, frequency, and human biology.</p>
-            <p>Each project is developed as an ecosystem—where the visible and the invisible work together to influence how we feel, function, and evolve.</p>
+            <p>Each project is developed as an ecosystem, where the visible and the invisible work together to influence how we feel, function, and evolve.</p>
           </div>
         </div>
       </div>
@@ -703,16 +846,36 @@
   <!-- ─── ABOUT ─────────────────────────────────────────────── -->
   <section id="about" aria-label="About">
     <div class="about-inner">
-      <div class="about-text">
-        <p class="label fade-in">About</p>
-        <div class="divider fade-in" style="margin-top: 1.5rem;"></div>
-        <div class="body-text fade-in" style="margin-top: 2.75rem;">
-          <p>Birgit Bauer Wöhlers is a specialist in cellular optimization, advanced aesthetics, and integrative health, with over a decade of experience across international strategy, wellness, and cross-sector collaboration.</p>
-          <p>Her work focuses on designing and curating systems that redefine how individuals and organizations approach health, performance, and long-term vitality—integrating science, aesthetics, and environment into cohesive and elevated ways of living.</p>
-          <p>She is the founder of <span class="kalos">Kalos</span>, a company dedicated to exploring innovations in longevity, biotechnology, and regenerative wellbeing, while developing concepts that translate emerging science into refined, real-world applications.</p>
-          <p>With a background in international relations, public policy, and strategic advisory, Birgit brings a structured yet intuitive approach to wellbeing—bridging disciplines such as integrative health, environmental design, and human behavior.</p>
-          <p>Her work extends across the United States, the Middle East, Europe, and the Americas, collaborating with leaders and initiatives shaping the future of longevity, conscious living, and human development.</p>
+      <div class="about-grid">
+
+        <!-- Text column -->
+        <div class="about-text">
+          <p class="label fade-in">About</p>
+          <div class="divider fade-in" style="margin-top: 1.5rem;"></div>
+          <div class="body-text fade-in" style="margin-top: 2.75rem;">
+            <p>Birgit Bauer Wöhlers is a specialist in cellular optimization, advanced aesthetics, and integrative health, with over a decade of experience across international strategy, wellness, and cross-sector collaboration.</p>
+            <p>Her work focuses on designing and curating systems that redefine how individuals and organizations approach health, performance, and long-term vitality, integrating science, aesthetics, and environment into cohesive and elevated ways of living.</p>
+            <p>She is the founder of <span class="kalos">Kalos</span>, a company dedicated to exploring innovations in longevity, biotechnology, and regenerative wellbeing, while developing concepts that translate emerging science into refined, real-world applications.</p>
+            <p>With a background in international relations, public policy, and strategic advisory, Birgit brings a structured yet intuitive approach to wellbeing, bridging disciplines such as integrative health, environmental design, and human behavior.</p>
+            <p>Her work extends across the United States, the Middle East, Europe, and the Americas, collaborating with leaders and initiatives shaping the future of longevity, conscious living, and human development.</p>
+          </div>
         </div>
+
+        <!-- Image column: about_section.jpeg (primary portrait)
+             Reserve: assets/images/about-02.jpg
+             Reserve: assets/images/about-03.jpg
+        -->
+        <div class="about-image fade-in">
+          <img
+            src="assets/images/about_section.jpeg"
+            alt="Birgit Bauer Wöhlers"
+            width="680"
+            height="680"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
       </div>
     </div>
   </section>
