@@ -275,13 +275,13 @@ img { display: block; max-width: 100%; }
   position: relative;
   z-index: 2;
   display: grid;
-  gap: clamp(44px, 6vw, 72px);
+  gap: clamp(24px, 4vw, 40px);
 }
 .what-intro {
   max-width: 760px;
 }
 .what-intro .label { margin-bottom: 1.5rem; }
-.what-intro .divider { margin: 0 0 2.75rem; }
+.what-intro .divider { margin: 0; }
 .what-intro .body-text p + p { margin-top: 1.4em; }
 
 .pillars-grid {

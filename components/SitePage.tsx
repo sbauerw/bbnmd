@@ -122,7 +122,7 @@ export default function SitePage() {
         <div className="positioning-inner">
           <div className="positioning-text">
             <p className="label fade-in">What I Do</p>
-            <div className="divider fade-in" style={{ marginTop: '1.5rem' }}></div>
+            <div className="divider fade-in"></div>
             <div className="body-text fade-in" style={{ marginTop: '2.75rem' }}>
               <p>I design and curate environments, strategies, and experiences that elevate wellbeing, longevity, and the way we live.</p>
               <p>My work explores how lifestyle, space, and emerging science come together to support vitality, mental clarity, and long-term health.</p>
@@ -136,7 +136,7 @@ export default function SitePage() {
         <div className="what-inner">
           <div className="what-intro fade-in">
             <p className="label">Who I Work With</p>
-            <div className="divider" style={{ marginTop: '1.5rem' }}></div>
+            <div className="divider"></div>
           </div>
           <div className="pillars-grid">
             <div className="pillar fade-in">
@@ -162,7 +162,7 @@ export default function SitePage() {
       <section id="differentiation" aria-label="How I Work">
         <div className="diff-inner">
           <p className="label fade-in">How I Work</p>
-          <div className="divider fade-in" style={{ marginTop: '1.5rem' }}></div>
+          <div className="divider fade-in"></div>
           <div
             className="body-text fade-in"
             style={{ marginTop: '2.75rem', maxWidth: 'var(--narrow-max)' }}
@@ -180,7 +180,7 @@ export default function SitePage() {
           <div className="about-grid">
             <div className="about-text">
               <p className="label fade-in">About</p>
-              <div className="divider fade-in" style={{ marginTop: '1.5rem' }}></div>
+              <div className="divider fade-in"></div>
               <div className="body-text fade-in" style={{ marginTop: '2.75rem' }}>
                 <p>Birgit Bauer Wöhlers is a specialist in cellular optimization, advanced aesthetics, and integrative health.</p>
                 <p>A certified naturopath (NMD) with a background in international strategy and public policy, she brings a multidisciplinary perspective to the way health, environment, and human behavior are understood and designed.</p>
@@ -197,7 +197,7 @@ export default function SitePage() {
         <div className="access-inner">
           <div className="access-content">
             <p className="label fade-in">Access</p>
-            <div className="divider divider--dark fade-in" style={{ marginTop: '1.5rem' }}></div>
+            <div className="divider divider--dark fade-in"></div>
             <h2
               className="section-heading section-heading--light fade-in"
               style={{ marginTop: '2.75rem' }}
