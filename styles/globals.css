@@ -594,6 +594,15 @@ footer {
   text-transform: uppercase;
   color: var(--text-secondary);
 }
+.form-error {
+  font-family: var(--font-sans);
+  font-size: 0.813rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
 
 /* ─── SUCCESS STATE ──────────────────────────────────────── */
 .form-success {

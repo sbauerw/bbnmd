@@ -16,8 +16,11 @@ It is a concise record of decisions, active architecture, and important constrai
 - The site follows a private advisory positioning
 - The CTA system is centered around a single action: Request Access
 - Inquiry flow is handled through a modal, not an inline page form
-- Form submissions use Formspree
+- Form submissions use Formspree (endpoint: `https://formspree.io/f/maqlogbb`)
+- Form success is shown only on a confirmed OK response; network errors and non-OK responses show an inline error message
+- Double submission is blocked while loading
 - Docs in `/docs` must be kept aligned with implementation
+- Root-level `index.html` and `assets/` folder have been removed; `public/assets/images/` is the single canonical asset path
 
 ---
 

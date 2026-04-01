@@ -7,11 +7,13 @@ export default function SitePage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
   const openModal = () => {
     setIsModalOpen(true)
     setShowSuccess(false)
+    setIsError(false)
     document.body.classList.add('modal-open')
   }
 
@@ -49,15 +51,23 @@ export default function SitePage() {
     if (!name || !email || !collab || !req) return
 
     setIsLoading(true)
+    setIsError(false)
     try {
       const data = new FormData(form)
-      await fetch('https://formspree.io/f/maqlogbb', {
+      const res = await fetch('https://formspree.io/f/maqlogbb', {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
       })
+      if (!res.ok) {
+        setIsError(true)
+        setIsLoading(false)
+        return
+      }
     } catch (_) {
-      // Network error — show optimistic success
+      setIsError(true)
+      setIsLoading(false)
+      return
     }
     setShowSuccess(true)
     setIsLoading(false)
@@ -341,8 +351,8 @@ export default function SitePage() {
                   >
                     Request Access
                   </button>
-                  <span 
-                    className="form-loading" 
+                  <span
+                    className="form-loading"
                     aria-live="polite"
                     style={{
                       opacity: isLoading ? 1 : 0,
@@ -354,6 +364,11 @@ export default function SitePage() {
                     Sending…
                   </span>
                 </div>
+                {isError && (
+                  <p className="form-error" role="alert">
+                    Something went wrong. Please try again or reach out directly.
+                  </p>
+                )}
               </form>
             </div>
           ) : (
