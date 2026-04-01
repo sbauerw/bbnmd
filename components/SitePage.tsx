@@ -40,6 +40,7 @@ export default function SitePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (isLoading) return
     const form = e.currentTarget
     const name = (form.querySelector('#f-name') as HTMLInputElement).value.trim()
     const email = (form.querySelector('#f-email') as HTMLInputElement).value.trim()
@@ -67,7 +68,8 @@ export default function SitePage() {
     <>
       <ScrollAnimations isModalOpen={isModalOpen} />
 
-      {/* ─── NAVIGATION ──────────────────────────────────────── */}
+      <main aria-hidden={isModalOpen}>
+        {/* ─── NAVIGATION ──────────────────────────────────────── */}
       <nav className="nav" id="nav" aria-label="Site navigation">
         <a href="#hero" className="nav-brand">Birgit Bauer Wöhlers</a>
         <button
@@ -223,10 +225,21 @@ export default function SitePage() {
       {/* ─── FOOTER ──────────────────────────────────────────── */}
       <footer aria-label="Footer">
         <div className="footer-inner">
-          <span className="footer-brand">Birgit Bauer Wöhlers</span>
-          <span className="footer-note">Private Advisory &nbsp;·&nbsp; All rights reserved</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span className="footer-brand">Birgit Bauer Wöhlers</span>
+            <span className="footer-note">Private Advisory &nbsp;·&nbsp; All rights reserved</span>
+          </div>
+          <div className="footer-social">
+            <a href="https://instagram.com/thebiohackingnmd" target="_blank" rel="noopener noreferrer">
+              Instagram
+            </a>
+            <a href="https://linkedin.com/in/johanabauer" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </div>
         </div>
       </footer>
+      </main>
 
       {/* ─── MODAL ───────────────────────────────────────────── */}
       <div
@@ -324,15 +337,22 @@ export default function SitePage() {
                     type="submit"
                     className="btn form-submit"
                     disabled={isLoading}
-                    style={isLoading ? { opacity: 0.5 } : undefined}
+                    style={isLoading ? { opacity: 0.5, cursor: 'not-allowed' } : undefined}
                   >
                     Request Access
                   </button>
-                  {isLoading && (
-                    <span className="form-loading" aria-live="polite">
-                      Sending…
-                    </span>
-                  )}
+                  <span 
+                    className="form-loading" 
+                    aria-live="polite"
+                    style={{
+                      opacity: isLoading ? 1 : 0,
+                      visibility: isLoading ? 'visible' : 'hidden',
+                      transition: 'opacity 0.3s ease',
+                      pointerEvents: 'none'
+                    }}
+                  >
+                    Sending…
+                  </span>
                 </div>
               </form>
             </div>
