@@ -332,16 +332,6 @@ export default function SitePage() {
                   ></textarea>
                 </div>
 
-                <div className="form-field">
-                  <label className="form-label" htmlFor="f-timeline">Availability / Timeline</label>
-                  <input
-                    className="form-input"
-                    type="text"
-                    id="f-timeline"
-                    name="timeline"
-                  />
-                </div>
-
                 <div className="form-footer">
                   <button
                     type="submit"
