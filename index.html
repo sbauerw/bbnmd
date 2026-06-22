@@ -175,25 +175,20 @@
     }
 
     /* ─── LANGUAGE TOGGLE ─── */
-    /* Floating horizontal box, fixed beneath nav on right side */
+    /* Inline in nav-right — distinctive but not floating */
     .lang-float {
-      position: fixed;
-      right: 3.5rem;
-      top: 78px; /* 66px nav + 12px gap */
-      z-index: 90;
       display: flex;
       align-items: center;
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      padding: 0.32rem 0.7rem;
+      border: 1px solid var(--accent);
+      padding: 0.36rem 0.8rem;
       gap: 0.2rem;
     }
 
     .lang-btn {
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.58rem;
+      font-size: 0.66rem;
       font-weight: 400;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-muted);
       background: none;
@@ -217,13 +212,14 @@
       transition: width 0.18s;
     }
 
-    .lang-btn.active { color: var(--text-mid); }
+    .lang-btn.active { color: var(--accent); font-weight: 500; }
     .lang-btn.active::after { width: 70%; }
     .lang-btn:hover { color: var(--text-primary); }
 
     .lang-divider {
       font-size: 0.5rem;
-      color: var(--border);
+      color: var(--accent);
+      opacity: 0.5;
       line-height: 1;
       user-select: none;
     }
@@ -437,6 +433,9 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1.2rem;
+      min-height: 2.6rem;
+      display: flex;
+      align-items: flex-start;
     }
 
     .entity-name {
@@ -445,7 +444,7 @@
       font-weight: 400;
       letter-spacing: 0.02em;
       line-height: 1;
-      margin-bottom: 2.4rem;
+      margin-bottom: 3.6rem;
     }
 
     .entity-card.light .entity-name { color: var(--text-primary); }
@@ -742,7 +741,7 @@
       .nav-id { display: none; }
       .nav-links { display: none; }
       .nav-right { flex-direction: row; gap: 1rem; align-items: center; }
-      .lang-float { display: none; }
+      .lang-float { display: flex; padding: 0.28rem 0.6rem; }
 
       section { padding: 4.5rem 1.5rem; }
 
@@ -765,13 +764,6 @@
 </head>
 <body>
 
-  <!-- ─── FLOATING LANGUAGE TOGGLE ─── -->
-  <div class="lang-float">
-    <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
-    <span class="lang-divider">·</span>
-    <button class="lang-btn" id="btnAR" onclick="setLang('ar')">AR</button>
-  </div>
-
   <!-- ─── NAV ─── -->
   <nav>
     <a href="https://thebiohackingnmd.com" class="nav-id" data-en="Birgit Bauer Wöhlers, NMD" data-ar="بيرغيت باور فيلرز">Birgit Bauer Wöhlers, NMD</a>
@@ -782,7 +774,11 @@
       <li><a href="#access"     data-en="Access"       data-ar="الوصول">Access</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn-outline" onclick="openModal()" data-en="Request Access" data-ar="طلب الوصول">Request Access</button>
+      <div class="lang-float">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <span class="lang-divider">·</span>
+        <button class="lang-btn" id="btnAR" onclick="setLang('ar')">AR</button>
+      </div>
     </div>
   </nav>
 
